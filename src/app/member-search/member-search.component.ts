@@ -21,7 +21,9 @@ export class MemberSearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.members$ = this.searchTerms.pipe(
+      // キーボード入力の後、300ms待って次の実行をする
       debounceTime(300),
+      // 直前のデータと同じ場合は処理を実行しない
       distinctUntilChanged(),
       switchMap((term: string) => this.memberService.searchMembers(term))
     );
